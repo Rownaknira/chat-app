@@ -8,7 +8,7 @@ export const Topbar = (): ReactElement => {
         <span className={styles.header1}>1 day chat App</span>
       </div>
       <div>
-        <span className={styles.header2}>All messages will be deleted at every 00:00 UTC</span>
+        <span>All messages will be deleted at every 00:00 UTC</span>
       </div>
     </div>
   );

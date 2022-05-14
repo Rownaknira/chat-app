@@ -1,18 +1,25 @@
 import React, { ReactElement } from 'react';
-import { messageType } from './Chat';
+import { ChatMessageType } from './Chat';
 import styles from './../styles/App.module.scss';
 
 type Props = {
-  chatMessage: messageType;
+  chatMessage: ChatMessageType;
 };
 
 export const Message = ({ chatMessage }: Props): ReactElement => {
   const messageLines: string[] = chatMessage.message.split("<br />");
+  const date = new Date(chatMessage.sendTime as string);
+  const padTo2Digits = (num: number) => {
+    return String(num).padStart(2, '0');
+  };
+  const hourMin = padTo2Digits(date.getHours()) + ":" + padTo2Digits(date.getMinutes());
+
   return (
     <div className={styles.message}>
       <div className={styles.avatar}>
-        <img src={ require(`../images/${chatMessage.avatar}`) } alt="User" />
-        <span>{chatMessage.name}</span>
+        {/* <img src={ require(`../images/${chatMessage.user.avatar}`) } alt="User" /> */}
+        <img src={`${chatMessage.user.avatar}`} alt="User" />
+        <span>{chatMessage.user.name}</span>
       </div>
       <div className={styles.arrow_left}></div>
       <div className={styles.content}>
@@ -21,7 +28,7 @@ export const Message = ({ chatMessage }: Props): ReactElement => {
         })}
       </div>
       <div className={styles.time}>
-        <span>{chatMessage.sendTime}</span>
+        <span>{hourMin}</span>
       </div>
     </div>
   );

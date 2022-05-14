@@ -51,7 +51,6 @@ export const Chat = (): ReactElement => {
   if (error) return <span>`Error! ${error.message}`;</span>
 
   const messages = data === undefined ? [] : data.chatMessages;
-  console.log(selectedUser);
   return (
     <div className={styles.chat}>
       <div className={styles.chat__heading}>

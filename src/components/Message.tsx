@@ -1,9 +1,9 @@
 import React, { ReactElement } from 'react';
-import { messageType } from './Chat';
+import { chatMessageType } from './Chat';
 import styles from './../styles/App.module.scss';
 
 type Props = {
-  chatMessage: messageType;
+  chatMessage: chatMessageType;
 };
 
 export const Message = ({ chatMessage }: Props): ReactElement => {
@@ -11,8 +11,8 @@ export const Message = ({ chatMessage }: Props): ReactElement => {
   return (
     <div className={styles.message}>
       <div className={styles.avatar}>
-        <img src={ require(`../images/${chatMessage.avatar}`) } alt="User" />
-        <span>{chatMessage.name}</span>
+        <img src={ require(`../images/${chatMessage.user.avatar}`) } alt="User" />
+        <span>{chatMessage.user.name}</span>
       </div>
       <div className={styles.arrow_left}></div>
       <div className={styles.content}>

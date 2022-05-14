@@ -1,20 +1,23 @@
 import { useReducer } from 'react';
-import { Topbar } from './components/TopBar';
-import { Navbar } from './components/NavBar';
-import { Chat } from './components/Chat';
+import { GeneralChannel } from './pages/GeneralChannel';
+import { LGTMChannel } from './pages/LGTMChannel';
+import { TechnologyChannel } from './pages/TechnologyChannel';
 import { GlobalContext, initialState, reducer } from './GlobalContext';
-import styles from './styles/App.module.scss';
+import { BrowserRouter as Router, Navigate, Routes, Route } from "react-router-dom";
 
 const App = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <GlobalContext.Provider value={{ state, dispatch }}>
-      <div className={styles.container}>
-        <Topbar />
-        <div className={styles.main}>
-          <div className={styles.main__left}><Navbar /></div>
-          <div className={styles.main__right}><Chat /></div>
-        </div>
+      <div>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Navigate to="/lgtm-channel" />} />
+            <Route path="/general-channel" element={<GeneralChannel/>} />
+            <Route path="/technology-channel" element={<TechnologyChannel/>} />
+            <Route path="/lgtm-channel" element={<LGTMChannel/>} />
+          </Routes>
+        </Router>
       </div>
     </GlobalContext.Provider>
   );

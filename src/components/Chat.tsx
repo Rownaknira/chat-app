@@ -15,6 +15,7 @@ export type messageType = {
   status: boolean,
 };
 
+// Sample chat message
 const messages: messageType[] = [
   {
     name: "Russell", avatar: "Russell.png", message: "Hello, I'm Russell. <br />How can I help you today?", sendTime: "08:55", status: true
@@ -49,7 +50,9 @@ export const Chat = (): ReactElement => {
           
         </div>
         {messages.map((chatMessage: messageType) => {
-          return chatMessage.name === selectedUser ? <OwnMessage chatMessage={chatMessage}/> : <Message chatMessage={chatMessage} />
+          return chatMessage.name === selectedUser
+          ? <React.Fragment key={chatMessage.sendTime}><OwnMessage chatMessage={chatMessage}/></React.Fragment>
+          : <React.Fragment key={chatMessage.sendTime}><Message chatMessage={chatMessage} /></React.Fragment>
         })}
         <div className={styles.downward}>
           <button type="button" className={styles.btn}>

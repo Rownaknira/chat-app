@@ -1,5 +1,6 @@
-import React, { ReactElement, useContext } from 'react';
+import React, { ReactElement, useContext, useState } from 'react';
 import { ChatBox } from './ChatBox';
+import { LIMIT } from '../Constants';
 import { Message } from './Message';
 import { OwnMessage } from './OwnMessage';
 import ArrowDownwardSharpIcon from '@mui/icons-material/ArrowDownwardSharp';
@@ -26,50 +27,41 @@ export type Query = {
   chatMessages: Array<ChatMessageType>;
 };
 
-// Sample chat message
-// const messages: ChatMessageType[] = [
-//   {
-//     message: "Hello, I'm Russell. <br />How can I help you today?", sendTime: "08:55", isSent: true, user: { id: 2, name: "Russell", avatar: "Russell.png" }
-//   },
-//   {
-//     message: "Hi, Russell <br />I need more information about Developer Plan.", sendTime: "08:56", isSent: true, user: { id: 1, name: "Joyse", avatar: "Joyse.png"}
-//   },
-//   {
-//     message: "Are we meeting today? <br />Project has been already finished and I have results to show you. ", sendTime: "08:57", isSent: true, user: { id: 3, name: "Sam", avatar: "Sam.png" }
-//   },
-//   {
-//     message: "Well I am not sure. <br />I have results to show you.", sendTime: "08:59", isSent: true, user: { id: 1, name: "Joyse", avatar: "Joyse.png"}
-//   },
-//   {
-//     message: "Hey, can you receive my chat?", sendTime: "09:02", isSent: false, user: { id: 1, name: "Joyse", avatar: "Joyse.png" }
-//   }, 
-// ];
-
 export const FETCH_MESSAGES = gql`
-    {
-      chatMessages(limit: 10) {
+  query chatMessages($limit: Int, $offset: Int) {
+    chatMessages(limit: $limit, start: $offset) {
+      id
+      message
+      sendTime
+      isSent
+      user {
         id
-        message
-        sendTime
-        isSent
-        user {
-          id
-          name
-          avatar
-        }
+        name
+        avatar
       }
     }
+  }
   `
   ;
 
 export const Chat = (): ReactElement => {
   const { state: { selectedUser } } = useContext(GlobalContext);
+  const [offset, setOffset] = useState<number>(0);
 
-  const { loading, error, data } = useQuery<Query>(FETCH_MESSAGES);
+  const { loading, error, data } = useQuery<Query>(FETCH_MESSAGES, { variables: { limit: LIMIT, offset: offset } });
   if (loading) return <span>'Loading...';</span>
   if (error) return <span>`Error! ${error.message}`;</span>
 
   const messages = data === undefined ? [] : data.chatMessages;
+  const handlePagination = (direction: string) => {
+    if (direction === "upward") {
+      setOffset(offset + LIMIT);
+    } else {
+      const newOffset = offset >= LIMIT ? offset - LIMIT : offset;
+      setOffset(newOffset);
+    }
+  };
+
   return (
     <div className={styles.chat}>
       <div className={styles.chat__heading}>
@@ -77,7 +69,7 @@ export const Chat = (): ReactElement => {
       </div>
       <div className={styles.chat__content}>
         <div className={styles.upward}>
-          <button type="button" className={styles.btn}>
+          <button type="button" className={styles.btn} onClick={e => handlePagination("upward")}>
             <span>Read more</span>
             <span className={styles.icon}><ArrowUpwardSharpIcon /></span>
           </button>
@@ -89,7 +81,7 @@ export const Chat = (): ReactElement => {
           : <React.Fragment key={chatMessage.id}><Message chatMessage={chatMessage} /></React.Fragment>
         })}
         <div className={styles.downward}>
-          <button type="button" className={styles.btn}>
+          <button type="button" className={styles.btn} onClick={e => handlePagination("downward")}>
             <span>Read more</span>
             <span className={styles.icon}><ArrowDownwardSharpIcon /></span>
           </button>

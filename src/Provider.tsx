@@ -1,6 +1,6 @@
 import React, { ReactElement, ReactNode} from 'react';
 import { ApolloClient, ApolloLink, ApolloProvider, InMemoryCache, createHttpLink } from '@apollo/client';
-import { ChatQueryMock } from './mock';
+import { ChatQueryMock, CreateMessageMock } from './mock';
 import { MockedProvider } from '@apollo/client/testing';
 import { schemaLink } from './schema';
 
@@ -30,7 +30,7 @@ export const client = new ApolloClient({
 export const Provider: React.FC<ProviderProps> = ({ useMocks, children }) => {
   if (useMocks)
     return (
-      <MockedProvider mocks={[ChatQueryMock]}>
+      <MockedProvider mocks={[ChatQueryMock, CreateMessageMock]} addTypename={false}>
         <>{children}</>
       </MockedProvider>
     )

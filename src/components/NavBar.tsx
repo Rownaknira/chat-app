@@ -14,7 +14,13 @@ const users = [{ name: "Joyse", id: 1 }, { name: "Russell", id: 2 }, { name: "Sa
 export const Navbar = (): ReactElement => {
   const { dispatch } = useGlobalContext();
   const onDropdownChange = (event: ChangeEvent<HTMLSelectElement>) => {
-    dispatch({ type: 'SelectedUser.Set', payload: event.target.value });
+    dispatch({
+      type: 'SelectedUser.Set',
+      payload: {
+        id: users.find(item => item.name === event.target.value)?.id ?? 1,
+        name: event.target.value
+      }
+    });
   };
 
   return (

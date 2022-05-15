@@ -1,18 +1,27 @@
-# Chat App
+# Creating a Chat screen with TypeScript, React, GraphQL and Apollo Client
+---
 
 ## System requirements:
-node: 17.0.0
-reactjs: 18.1.0
-typescript: 4.6.4
+⋅⋅* node: 17.0.0
+⋅⋅* react: 18.1.0
+⋅⋅* typescript: 4.6.4
 
-## Available Scripts
+## Description
+This project is a simple chat screen created using React, Typescript with Graphql. Apollo client has been used to fetch and post data. MockedProvider from Apollo client and [faker](https://www.npmjs.com/package/factory.ts) have been used to display mock data in chat UI.
 
-In the project directory, you can run:
+### UI:
 
-### `npm start`
+### Setup:
+Clone and set up the project:
+```
+git clone git@github.com:Rownaknira/chat-app.git
+cd chat-app
+npm install 
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Run the Application:
+```
+npm start
+```
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+In browser, app will be running on http://localhost:3000/

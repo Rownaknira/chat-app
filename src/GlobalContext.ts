@@ -1,9 +1,9 @@
 import { createContext, Reducer, useContext } from "react";
 
-type GlobalState = { selectedUser: string };
-type Actions = { type: 'SelectedUser.Set'; payload: string; };
+type GlobalState = { selectedUser: { id: number, name: string } };
+type Actions = { type: 'SelectedUser.Set'; payload: { id: number, name: string }; };
 
-export const initialState: GlobalState = { selectedUser: "Joyse" };
+export const initialState: GlobalState = { selectedUser: { id: 1, name: "Joyse" } };
 
 export const reducer: Reducer<GlobalState, Actions> = (state, action) => {
   switch (action.type) {

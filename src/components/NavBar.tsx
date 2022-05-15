@@ -1,4 +1,5 @@
 import { ChangeEvent, ReactElement } from 'react';
+import { USERS } from '../Constants';
 import { useGlobalContext } from '../GlobalContext';
 import { NavLink } from "react-router-dom";
 import styles from './../styles/App.module.scss';
@@ -8,8 +9,7 @@ type userType = {
   id: number;
 };
 
-// Sample data to display users in Selectlist
-const users = [{ name: "Joyse", id: 1 }, { name: "Russell", id: 2 }, { name: "Sam", id: 3 }];
+
 
 export const Navbar = (): ReactElement => {
   const { dispatch } = useGlobalContext();
@@ -17,7 +17,7 @@ export const Navbar = (): ReactElement => {
     dispatch({
       type: 'SelectedUser.Set',
       payload: {
-        id: users.find(item => item.name === event.target.value)?.id ?? 1,
+        id: USERS.find(item => item.name === event.target.value)?.id ?? 1,
         name: event.target.value
       }
     });
@@ -28,7 +28,7 @@ export const Navbar = (): ReactElement => {
       <div>
         <span>1. Choose your user</span>
         <select className={styles.dropdown} onChange={onDropdownChange}>
-          {users.map((user: userType): ReactElement => {
+          {USERS.map((user: userType): ReactElement => {
             return <option value={user.name} key={user.id}>{user.name}</option>
           })}
         </select>

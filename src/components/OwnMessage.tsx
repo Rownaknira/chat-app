@@ -1,6 +1,7 @@
 import React, { ReactElement } from 'react';
 import { ChatMessageType } from './Chat';
 import CheckCircleSharpIcon from '@mui/icons-material/CheckCircleSharp';
+import { padTo2Digits } from '../Helpers';
 import ErrorSharpIcon from '@mui/icons-material/ErrorSharp';
 import styles from './../styles/App.module.scss';
 
@@ -11,9 +12,6 @@ type Props = {
 export const OwnMessage = ({ chatMessage }: Props): ReactElement => {
   const messageLines: string[] = chatMessage.message.split("<br />");
   const date = new Date(chatMessage.sendTime as string);
-  const padTo2Digits = (num: number) => {
-    return String(num).padStart(2, '0');
-  };
   const hourMin = padTo2Digits(date.getHours()) + ":" + padTo2Digits(date.getMinutes());
   return (
     <div className={styles.own_message}>

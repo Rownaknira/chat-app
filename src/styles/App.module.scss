@@ -169,6 +169,7 @@ html, body {
       line-height: 150%;
       position: relative;
       font-size: 1rem;
+      margin-bottom: 1rem;
     }
 
     div.time span {
@@ -183,7 +184,7 @@ html, body {
     & div.message {
       display: flex;
       vertical-align: middle;
-      padding-top: 3rem;
+      padding-top: 1rem;
 
       & div.avatar {
         margin-right: 1.25rem;
@@ -211,7 +212,7 @@ html, body {
     & div.own_message {
       display: flex;
       vertical-align: middle;
-      padding-top: 3rem;
+      padding-top: 1rem;
       flex-direction: row-reverse;
 
       & div.avatar {

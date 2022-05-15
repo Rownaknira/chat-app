@@ -1,6 +1,7 @@
 import * as Factory from 'factory.ts'
 import { faker } from '@faker-js/faker';
 import { ChatMessageType, UserType, FETCH_MESSAGES, Query } from '../src/components/Chat';
+import { LIMIT } from '../src/Constants';
 import { POST_CHAT_MESSAGE } from '../src/components/ChatBox';
 import { MockedResponse } from '@apollo/client/testing';
 
@@ -23,12 +24,13 @@ export const ChatMessageMock = Factory.Sync.makeFactory<ChatMessageType>({
 export const ChatQueryMock: MockedResponse<Query> = {
   request: {
     query: FETCH_MESSAGES,
+    variables: { limit: LIMIT, offset: 0 },
   },
   result: {
       data: {
-        chatMessages: ChatMessageMock.buildList(10),
+        chatMessages: ChatMessageMock.buildList(LIMIT),
       },
-  },
+  }
 };
 
 export const CreateMessageMock = {

@@ -1,5 +1,6 @@
 import React, { ReactElement } from 'react';
 import { ChatMessageType } from './Chat';
+import { padTo2Digits } from '../Helpers';
 import styles from './../styles/App.module.scss';
 
 type Props = {
@@ -9,9 +10,6 @@ type Props = {
 export const Message = ({ chatMessage }: Props): ReactElement => {
   const messageLines: string[] = chatMessage.message.split("<br />");
   const date = new Date(chatMessage.sendTime as string);
-  const padTo2Digits = (num: number) => {
-    return String(num).padStart(2, '0');
-  };
   const hourMin = padTo2Digits(date.getHours()) + ":" + padTo2Digits(date.getMinutes());
 
   return (
@@ -24,7 +22,7 @@ export const Message = ({ chatMessage }: Props): ReactElement => {
       <div className={styles.arrow_left}></div>
       <div className={styles.content}>
         {messageLines.map((text: string) => {
-          return <React.Fragment key={text}><span>{text}</span><br /></React.Fragment>
+          return <React.Fragment key={text}><span>{text}</span></React.Fragment>
         })}
       </div>
       <div className={styles.time}>

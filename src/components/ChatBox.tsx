@@ -35,7 +35,7 @@ export const POST_CHAT_MESSAGE = gql`
 
 export const ChatBox = (): ReactElement => {
   const { state: { selectedUser } } = useContext(GlobalContext);
-  const [createMessage, data] = useMutation(POST_CHAT_MESSAGE);
+  const [createMessage, ] = useMutation(POST_CHAT_MESSAGE);
   // TODO: need to update user with logged in user's information
   const [chatMessage, setChatMessage] = useState<chatMessageInputType>({
     message: '',
@@ -53,18 +53,8 @@ export const ChatBox = (): ReactElement => {
   const handleSubmit = useCallback((e: any)=> {
     e.preventDefault();
     setChatMessage({ ...chatMessage, sendTime: (new Date()).toString() });
-    const mockData = {
-      message: 'Mock lorem ipsum text. And another paragraph.',
-      sendTime: '',
-      isSent: false,
-      userId: 1,
-      userName: 'Joyse',
-      userAvatar: faker.image.avatar(),
-    };
-    createMessage({variables: { ...mockData }});
+    createMessage({ variables: { ...chatMessage } });
   }, [chatMessage, createMessage]);
-
-  console.log(data);
 
   return (
     <div className={styles.chatbox}>

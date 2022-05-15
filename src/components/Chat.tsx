@@ -9,22 +9,41 @@ import { useQuery, gql } from '@apollo/client';
 import styles from './../styles/App.module.scss';
 
 export type ChatMessageType = {
-  id: number;
-  message: String;
-  sendTime: String;
-  isSent: Boolean;
-  user: User;
+  id?: number;
+  message: string;
+  sendTime: string;
+  isSent: boolean;
+  user: UserType;
 };
 
-export type User = {
-  id: number;
-  name: String;
-  avatar: String;
+export type UserType = {
+  id?: number;
+  name: string;
+  avatar: string;
 };
 
 export type Query = {
   chatMessages: Array<ChatMessageType>;
 };
+
+// Sample chat message
+// const messages: ChatMessageType[] = [
+//   {
+//     message: "Hello, I'm Russell. <br />How can I help you today?", sendTime: "08:55", isSent: true, user: { id: 2, name: "Russell", avatar: "Russell.png" }
+//   },
+//   {
+//     message: "Hi, Russell <br />I need more information about Developer Plan.", sendTime: "08:56", isSent: true, user: { id: 1, name: "Joyse", avatar: "Joyse.png"}
+//   },
+//   {
+//     message: "Are we meeting today? <br />Project has been already finished and I have results to show you. ", sendTime: "08:57", isSent: true, user: { id: 3, name: "Sam", avatar: "Sam.png" }
+//   },
+//   {
+//     message: "Well I am not sure. <br />I have results to show you.", sendTime: "08:59", isSent: true, user: { id: 1, name: "Joyse", avatar: "Joyse.png"}
+//   },
+//   {
+//     message: "Hey, can you receive my chat?", sendTime: "09:02", isSent: false, user: { id: 1, name: "Joyse", avatar: "Joyse.png" }
+//   }, 
+// ];
 
 export const FETCH_MESSAGES = gql`
     {
@@ -65,7 +84,7 @@ export const Chat = (): ReactElement => {
           
         </div>
         {messages.map((chatMessage: ChatMessageType) => {
-          return chatMessage.user.name === selectedUser
+          return chatMessage.user.name === selectedUser.name
           ? <React.Fragment key={chatMessage.id}><OwnMessage chatMessage={chatMessage}/></React.Fragment>
           : <React.Fragment key={chatMessage.id}><Message chatMessage={chatMessage} /></React.Fragment>
         })}

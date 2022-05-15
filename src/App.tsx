@@ -1,25 +1,25 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useReducer } from 'react';
+import { GeneralChannel } from './pages/GeneralChannel';
+import { LGTMChannel } from './pages/LGTMChannel';
+import { TechnologyChannel } from './pages/TechnologyChannel';
+import { GlobalContext, initialState, reducer } from './GlobalContext';
+import { BrowserRouter as Router, Navigate, Routes, Route } from "react-router-dom";
 
-function App() {
+const App = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <GlobalContext.Provider value={{ state, dispatch }}>
+      <div>
+        <Router>
+          <Routes>
+            <Route path="/" element={<Navigate to="/lgtm-channel" />} />
+            <Route path="/general-channel" element={<GeneralChannel/>} />
+            <Route path="/technology-channel" element={<TechnologyChannel/>} />
+            <Route path="/lgtm-channel" element={<LGTMChannel/>} />
+          </Routes>
+        </Router>
+      </div>
+    </GlobalContext.Provider>
   );
 }
 
